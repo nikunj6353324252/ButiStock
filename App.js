@@ -25,8 +25,22 @@ const App = () => {
           }}
         />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Scan" component={QrScanScreen} />
-        <Stack.Screen name="Report" component={ReportScreen} />
+        <Stack.Screen
+          name="Scan"
+          component={QrScanScreen}
+          options={{
+            headerShown: true,
+            header: () => <CustomeHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="Report"
+          component={ReportScreen}
+          options={{
+            headerShown: true,
+            header: () => <CustomeHeader />,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
