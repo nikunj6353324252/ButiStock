@@ -1,9 +1,9 @@
-import {View, Text, Dimensions, ScrollView} from 'react-native';
+import {View, Text, Dimensions, ScrollView, TextInput} from 'react-native';
 import React, {useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useRoute} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
-import {TextInput} from 'react-native-paper';
+// import {TextInput} from 'react-native-paper';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
@@ -49,12 +49,14 @@ const QrScanScreen = () => {
               paddingHorizontal: scale(5),
               marginBottom: verticalScale(5),
               paddingVertical: verticalScale(20),
+              backgroundColor: 'rgba(255,255,255,0.3)',
             }}
-            placeholderStyle={{fontSize: 16, color: 'grey'}}
+            placeholderStyle={{fontSize: 16, color: 'white'}}
             selectedTextStyle={{fontSize: 16, color: 'black'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
+            iconColor="white"
             backgroundColor={'rgba(0,0,0,0.7)'}
             labelField="label"
             valueField="value"
@@ -91,13 +93,15 @@ const QrScanScreen = () => {
               paddingHorizontal: scale(5),
               marginBottom: verticalScale(5),
               paddingVertical: verticalScale(20),
+              backgroundColor: 'rgba(255,255,255,0.3)',
             }}
-            placeholderStyle={{fontSize: 16, color: 'grey'}}
+            placeholderStyle={{fontSize: 16, color: 'white'}}
             selectedTextStyle={{fontSize: 16, color: 'black'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
             backgroundColor={'rgba(0,0,0,0.7)'}
+            iconColor="white"
             labelField="label"
             valueField="value"
             placeholder={!isFocus ? 'Product Name' : '...'}
@@ -133,13 +137,15 @@ const QrScanScreen = () => {
               paddingHorizontal: scale(5),
               marginBottom: verticalScale(5),
               paddingVertical: verticalScale(20),
+              backgroundColor: 'rgba(255,255,255,0.3)',
             }}
-            placeholderStyle={{fontSize: 16, color: 'grey'}}
+            placeholderStyle={{fontSize: 16, color: 'white'}}
             selectedTextStyle={{fontSize: 16, color: 'black'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
             backgroundColor={'rgba(0,0,0,0.7)'}
+            iconColor="white"
             labelField="label"
             valueField="value"
             placeholder={!isFocus ? 'Process Name' : '...'}
@@ -160,44 +166,90 @@ const QrScanScreen = () => {
             justifyContent: 'space-around',
             marginTop: verticalScale(30),
           }}>
-          <View
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.3)',
-              padding: scale(53),
-              borderRadius: scale(5),
-            }}>
-            <Text style={{fontSize: scale(20), color: 'white'}}>G.Q</Text>
+          <View>
+            <TextInput
+              placeholder="G.Q"
+              placeholderTextColor={'white'}
+              multiline={true}
+              style={{
+                fontSize: scale(20),
+                width: scale(150),
+                height: verticalScale(150),
+                color: 'white',
+                borderRadius: scale(5),
+                paddingLeft: scale(45),
+                backgroundColor: '#87CEEB',
+              }}
+            />
           </View>
-          <View
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.3)',
-              padding: scale(53),
-              borderRadius: scale(5),
-            }}>
-            <Text style={{fontSize: scale(20), color: 'white'}}>G.W</Text>
+          <View>
+            <TextInput
+              placeholder="G.W"
+              placeholderTextColor={'white'}
+              multiline={true}
+              style={{
+                fontSize: scale(20),
+                width: scale(150),
+                height: verticalScale(150),
+                color: 'white',
+                borderRadius: scale(5),
+                paddingLeft: scale(45),
+                backgroundColor: '#87CEEB',
+              }}
+            />
           </View>
+
+          {/* <TextInput
+              placeholder="G.W"
+              placeholderTextColor={'white'}
+              multiline={true}
+              style={{
+                fontSize: scale(20),
+                width: scale(150),
+                height: verticalScale(150),
+                color: 'white',
+                borderRadius: scale(5),
+                backgroundColor: 'rgba(255,255,255,0.3)',
+              }}
+            /> */}
         </View>
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-around',
-            marginTop: verticalScale(11),
+            marginTop: verticalScale(5),
           }}>
-          <View
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.3)',
-              padding: scale(53),
-              borderRadius: scale(5),
-            }}>
-            <Text style={{fontSize: scale(20), color: 'white'}}>R.Q</Text>
+          <View>
+            <TextInput
+              placeholder="R.Q"
+              placeholderTextColor={'white'}
+              multiline={true}
+              style={{
+                fontSize: scale(20),
+                width: scale(150),
+                height: verticalScale(150),
+                color: 'white',
+                borderRadius: scale(5),
+                paddingLeft: scale(45),
+                backgroundColor: 'rgba(255,255,255,0.3)',
+              }}
+            />
           </View>
-          <View
-            style={{
-              backgroundColor: 'rgba(255,255,255,0.3)',
-              padding: scale(53),
-              borderRadius: scale(5),
-            }}>
-            <Text style={{fontSize: scale(20), color: 'white'}}>R.W</Text>
+          <View>
+            <TextInput
+              placeholder="R.W"
+              placeholderTextColor={'white'}
+              multiline={true}
+              style={{
+                fontSize: scale(20),
+                width: scale(150),
+                height: verticalScale(150),
+                color: 'white',
+                borderRadius: scale(5),
+                paddingLeft: scale(45),
+                backgroundColor: 'rgba(255,255,255,0.3)',
+              }}
+            />
           </View>
         </View>
 
@@ -205,16 +257,31 @@ const QrScanScreen = () => {
           <TextInput
             placeholder="Laber"
             keyboardType="numeric"
-            style={{borderRadius: scale(5), borderWidth: scale(0.5)}}
+            placeholderTextColor={'white'}
+            style={{
+              borderRadius: scale(5),
+              borderWidth: scale(0.5),
+              borderColor: 'white',
+              backgroundColor: 'rgba(255,255,255,0.3)',
+              height: verticalScale(45),
+              fontSize: scale(15),
+              paddingLeft: scale(10),
+            }}
           />
 
           <TextInput
             placeholder="Track"
             keyboardType="numeric"
+            placeholderTextColor={'white'}
             style={{
               borderWidth: scale(0.5),
               borderRadius: scale(5),
+              borderColor: 'white',
               marginTop: scale(15),
+              fontSize: scale(15),
+              height: verticalScale(45),
+              backgroundColor: 'rgba(255,255,255,0.3)',
+              paddingLeft: scale(10),
             }}
           />
         </View>

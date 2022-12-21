@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, Linking} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import {useNavigation} from '@react-navigation/native';
@@ -30,11 +30,6 @@ const Scanner = () => {
       reactivate={true}
       flashMode={RNCamera.Constants.FlashMode.off}
       topContent={<Text style={styles.centerText}>{qrresult}</Text>}
-      //   bottomContent={
-      //     <TouchableOpacity style={styles.buttonTouchable}>
-      //       <Text style={styles.buttonText}>OK. Got it!</Text>
-      //     </TouchableOpacity>
-      //   }
     />
   );
 };

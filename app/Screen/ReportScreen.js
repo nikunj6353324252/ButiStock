@@ -95,8 +95,47 @@ const ReportScreen = () => {
         flex: 1,
         backgroundColor: '#2C3539',
         height: height,
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
-      <View>
+      <View
+        style={{
+          width: scale(300),
+          height: verticalScale(70),
+          backgroundColor: 'white',
+          borderRadius: scale(5),
+          padding: scale(10),
+          marginTop: verticalScale(20),
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: verticalScale(2),
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: scale(4),
+          elevation: scale(2),
+        }}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View>
+            <Text style={{fontSize: scale(15), color: 'black'}}>
+              code : 1023
+            </Text>
+            <Text style={{fontSize: scale(15), color: 'black'}}>
+              Worker : Harshil
+            </Text>
+          </View>
+
+          <View>
+            <Text style={{fontSize: scale(15), color: 'black'}}>
+              code : 1023
+            </Text>
+            <Text style={{fontSize: scale(15), color: 'black'}}>
+              Worker : Harshil
+            </Text>
+          </View>
+        </View>
+      </View>
+      {/* <View>
         <DataTable style={{padding: scale(15)}}>
           <DataTable.Header style={{backgroundColor: '#DCDCDC'}}>
             <DataTable.Title>Code</DataTable.Title>
@@ -132,7 +171,7 @@ const ReportScreen = () => {
             <DataTable.Cell>30</DataTable.Cell>
           </DataTable.Row>
         </DataTable>
-      </View>
+      </View> */}
 
       <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <View style={{alignItems: 'flex-end'}}>
@@ -142,7 +181,7 @@ const ReportScreen = () => {
             }}
             style={{
               width: width / 4,
-              backgroundColor: '#66b2ff',
+              backgroundColor: '#87CEEB',
               marginBottom: verticalScale(15),
               padding: scale(13),
               paddingVertical: verticalScale(15),
@@ -479,7 +518,7 @@ const ReportScreen = () => {
                         style={{
                           width: scale(170),
                           height: verticalScale(44),
-                          backgroundColor: '#66b2ff',
+                          backgroundColor: '#87CEEB',
                           justifyContent: 'center',
                           alignItems: 'center',
                           borderRadius: scale(4),

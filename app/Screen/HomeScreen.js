@@ -27,8 +27,8 @@ const HomeScreen = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Scan')}
           style={{
-            backgroundColor: '#66b2ff',
-            marginTop: 30,
+            backgroundColor: '#474c54',
+            marginTop: 10,
             padding: 13,
             paddingVertical: verticalScale(30),
             borderRadius: 7,
@@ -51,7 +51,7 @@ const HomeScreen = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Report')}
           style={{
-            backgroundColor: '#66b2ff',
+            backgroundColor: '#474c54',
             marginTop: 30,
             marginBottom: verticalScale(150),
             padding: 13,

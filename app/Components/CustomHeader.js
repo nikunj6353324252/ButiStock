@@ -14,7 +14,7 @@ const CustomeHeader = () => {
           width: scale(350),
           height: verticalScale(65),
           alignItems: 'center',
-          backgroundColor: 'white',
+          backgroundColor: '#87CEEB',
           borderBottomLeftRadius: verticalScale(15),
           borderBottomRightRadius: verticalScale(15),
           shadowColor: '#000',
