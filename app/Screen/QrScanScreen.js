@@ -1,20 +1,21 @@
 import {View, Text, Dimensions, ScrollView, TextInput} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useIsFocused} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
-// import {TextInput} from 'react-native-paper';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
 
 const QrScanScreen = () => {
   const [value, setValue] = useState(null);
+  const [Group, setGroup] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const route = useRoute();
+  const isFocused = useIsFocused();
 
   const qrdata = route.params?.data.result;
-  console.log('qrdata', qrdata);
+  // console.log('qrdata', qrdata);
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -24,6 +25,10 @@ const QrScanScreen = () => {
     {label: '20 KT ', value: '5'},
     {label: '22 KT ', value: '6'},
   ];
+
+  useEffect(() => {
+    setGroup(qrdata);
+  }, []);
 
   return (
     <ScrollView style={{backgroundColor: '#2C3539', height: height}}>
@@ -52,7 +57,7 @@ const QrScanScreen = () => {
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
             placeholderStyle={{fontSize: 16, color: 'white'}}
-            selectedTextStyle={{fontSize: 16, color: 'black'}}
+            selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
@@ -60,7 +65,7 @@ const QrScanScreen = () => {
             backgroundColor={'rgba(0,0,0,0.7)'}
             labelField="label"
             valueField="value"
-            placeholder={!isFocus ? 'Select Worker' : '...'}
+            placeholder={!isFocus ? Group : '...'}
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
@@ -96,7 +101,7 @@ const QrScanScreen = () => {
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
             placeholderStyle={{fontSize: 16, color: 'white'}}
-            selectedTextStyle={{fontSize: 16, color: 'black'}}
+            selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
@@ -140,7 +145,7 @@ const QrScanScreen = () => {
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
             placeholderStyle={{fontSize: 16, color: 'white'}}
-            selectedTextStyle={{fontSize: 16, color: 'black'}}
+            selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
             data={data}
             maxHeight={250}
@@ -266,6 +271,7 @@ const QrScanScreen = () => {
               height: verticalScale(45),
               fontSize: scale(15),
               paddingLeft: scale(10),
+              color: 'white',
             }}
           />
 
@@ -282,6 +288,7 @@ const QrScanScreen = () => {
               height: verticalScale(45),
               backgroundColor: 'rgba(255,255,255,0.3)',
               paddingLeft: scale(10),
+              color: 'white',
             }}
           />
         </View>

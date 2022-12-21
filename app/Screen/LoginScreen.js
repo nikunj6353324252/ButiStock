@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {scale, verticalScale} from 'react-native-size-matters';
 
 const {height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -18,14 +19,17 @@ const LoginScreen = () => {
   const [password, setPassword] = useState();
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#2C3539'}}>
       <StatusBar backgroundColor={'#2C3539'} barStyle="light-content" />
       <View
         style={{
-          backgroundColor: '#66b2ff',
+          backgroundColor: '#87CEEB',
           height: height / 3,
+          width: width,
           justifyContent: 'center',
           alignItems: 'center',
+          borderBottomLeftRadius: scale(15),
+          borderBottomRightRadius: scale(15),
         }}>
         <Text style={{fontSize: scale(22), color: 'white', fontWeight: 'bold'}}>
           Hii , welcome to our app
@@ -78,7 +82,7 @@ const LoginScreen = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Home')}
             style={{
-              backgroundColor: '#66b2ff',
+              backgroundColor: '#87CEEB',
               marginTop: scale(50),
               padding: scale(12),
               borderRadius: scale(5),
