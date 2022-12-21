@@ -1,6 +1,7 @@
 import {View, Text, Dimensions, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
+import {useRoute} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {TextInput} from 'react-native-paper';
 
@@ -10,6 +11,10 @@ const {width} = Dimensions.get('window');
 const QrScanScreen = () => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const route = useRoute();
+
+  const qrdata = route.params?.data.result;
+  console.log('qrdata', qrdata);
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -199,11 +204,13 @@ const QrScanScreen = () => {
         <View style={{marginTop: scale(40)}}>
           <TextInput
             placeholder="Laber"
+            keyboardType="numeric"
             style={{borderRadius: scale(5), borderWidth: scale(0.5)}}
           />
 
           <TextInput
             placeholder="Track"
+            keyboardType="numeric"
             style={{
               borderWidth: scale(0.5),
               borderRadius: scale(5),

@@ -7,6 +7,7 @@ import LoginScreen from './app/Screen/LoginScreen';
 import QrScanScreen from './app/Screen/QrScanScreen';
 import ReportScreen from './app/Screen/ReportScreen';
 import CustomeHeader from './app/Components/CustomHeader';
+import Scanner from './app/Screen/Scanner';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +27,7 @@ const App = () => {
         />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen
-          name="Scan"
+          name="ScanScreen"
           component={QrScanScreen}
           options={{
             headerShown: true,
@@ -41,6 +42,7 @@ const App = () => {
             header: () => <CustomeHeader />,
           }}
         />
+        <Stack.Screen name="Scan" component={Scanner} />
       </Stack.Navigator>
     </NavigationContainer>
   );
