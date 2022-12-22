@@ -1,4 +1,4 @@
-import {PROCESS_NAME} from './Types';
+import {WORKER} from './Types';
 
 export const ProcessData =
   (userToken = '') =>
@@ -25,7 +25,7 @@ export const ProcessData =
         console.log('Data', Data);
         if (Data.status == true) {
           dispatch({
-            type: PROCESS_NAME,
+            type: WORKER,
             payload: Data,
           });
         }

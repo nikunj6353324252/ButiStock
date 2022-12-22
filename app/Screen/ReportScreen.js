@@ -13,9 +13,13 @@ const {width} = Dimensions.get('window');
 const ReportScreen = () => {
   const dispatch = useDispatch();
   const {userToken} = useSelector(state => state.authState);
+  const {worker} = useSelector(state => state.dataState);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(null);
+  const [name, setName] = useState();
   const [isFocus, setIsFocus] = useState(false);
+
+  const Data = worker.datalist;
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -357,18 +361,18 @@ const ReportScreen = () => {
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
                       inputSearchStyle={{height: 40, fontSize: 16}}
-                      data={data}
+                      data={Data}
                       maxHeight={250}
                       backgroundColor={'rgba(0,0,0,0.7)'}
-                      labelField="label"
-                      valueField="value"
+                      labelField="name"
+                      valueField="id"
                       placeholder={!isFocus ? 'Select Worker' : '...'}
                       value={value}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
-                        setValue(item.value);
-                        setGroup(item.label);
+                        setValue(item.id);
+                        setName(item.name);
                         setIsFocus(false);
                       }}
                     />
