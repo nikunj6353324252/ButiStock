@@ -4,12 +4,15 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
-import {DataTable} from 'react-native-paper';
+import {ProcessData} from '../Redux/action/DataAction';
+import {useDispatch, useSelector} from 'react-redux';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
 
 const ReportScreen = () => {
+  const dispatch = useDispatch();
+  const {userToken} = useSelector(state => state.authState);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -135,48 +138,12 @@ const ReportScreen = () => {
           </View>
         </View>
       </View>
-      {/* <View>
-        <DataTable style={{padding: scale(15)}}>
-          <DataTable.Header style={{backgroundColor: '#DCDCDC'}}>
-            <DataTable.Title>Code</DataTable.Title>
-            <DataTable.Title>Worker</DataTable.Title>
-            <DataTable.Title>Product</DataTable.Title>
-            <DataTable.Title>Given Qty</DataTable.Title>
-          </DataTable.Header>
-          <DataTable.Row style={{backgroundColor: 'white'}}>
-            <DataTable.Cell>123</DataTable.Cell>
-            <DataTable.Cell>Harshil</DataTable.Cell>
-            <DataTable.Cell>Silver</DataTable.Cell>
-            <DataTable.Cell>10</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row style={{backgroundColor: 'white'}}>
-            <DataTable.Cell>124</DataTable.Cell>
-            <DataTable.Cell>Chirag</DataTable.Cell>
-            <DataTable.Cell>Silver</DataTable.Cell>
-            <DataTable.Cell>20</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row style={{backgroundColor: 'white'}}>
-            <DataTable.Cell>125</DataTable.Cell>
-            <DataTable.Cell>Maulik</DataTable.Cell>
-            <DataTable.Cell>Gold</DataTable.Cell>
-            <DataTable.Cell>5</DataTable.Cell>
-          </DataTable.Row>
-
-          <DataTable.Row style={{backgroundColor: 'white'}}>
-            <DataTable.Cell>126</DataTable.Cell>
-            <DataTable.Cell>Jainik</DataTable.Cell>
-            <DataTable.Cell>Gold</DataTable.Cell>
-            <DataTable.Cell>30</DataTable.Cell>
-          </DataTable.Row>
-        </DataTable>
-      </View> */}
 
       <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <View style={{alignItems: 'flex-end'}}>
           <TouchableOpacity
             onPress={() => {
+              dispatch(ProcessData(userToken));
               setModalVisible(!modalVisible);
             }}
             style={{

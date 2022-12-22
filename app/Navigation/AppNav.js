@@ -9,7 +9,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 const AppNav = () => {
   const dispatch = useDispatch();
   const {authLoading, userToken} = useSelector(state => state.authState);
-  //   console.log('userToken', userToken);
 
   return (
     <View style={{flex: 1, backgroundColor: '#FFFFFF'}}>

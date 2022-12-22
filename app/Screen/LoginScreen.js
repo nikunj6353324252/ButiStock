@@ -79,7 +79,7 @@ const LoginScreen = () => {
           validationSchema={yup.object().shape({
             userName: yup
               .string()
-              .min(4)
+              .min(2)
               .required('Please, provide your userName!'),
             password: yup
               .string()
