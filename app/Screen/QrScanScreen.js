@@ -15,7 +15,7 @@ const QrScanScreen = () => {
   const isFocused = useIsFocused();
 
   const qrdata = route.params?.data.result;
-  // console.log('qrdata', qrdata);
+  console.log('qrdata', qrdata);
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -25,10 +25,6 @@ const QrScanScreen = () => {
     {label: '20 KT ', value: '5'},
     {label: '22 KT ', value: '6'},
   ];
-
-  useEffect(() => {
-    setGroup(qrdata);
-  }, []);
 
   return (
     <ScrollView style={{backgroundColor: '#2C3539', height: height}}>
@@ -65,7 +61,7 @@ const QrScanScreen = () => {
             backgroundColor={'rgba(0,0,0,0.7)'}
             labelField="label"
             valueField="value"
-            placeholder={!isFocus ? Group : '...'}
+            placeholder={!isFocus ? qrdata : '...'}
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
@@ -176,6 +172,7 @@ const QrScanScreen = () => {
               placeholder="G.Q"
               placeholderTextColor={'white'}
               multiline={true}
+              keyboardType="numeric"
               style={{
                 fontSize: scale(20),
                 width: scale(150),
@@ -191,6 +188,7 @@ const QrScanScreen = () => {
             <TextInput
               placeholder="G.W"
               placeholderTextColor={'white'}
+              keyboardType="numeric"
               multiline={true}
               style={{
                 fontSize: scale(20),
@@ -203,20 +201,6 @@ const QrScanScreen = () => {
               }}
             />
           </View>
-
-          {/* <TextInput
-              placeholder="G.W"
-              placeholderTextColor={'white'}
-              multiline={true}
-              style={{
-                fontSize: scale(20),
-                width: scale(150),
-                height: verticalScale(150),
-                color: 'white',
-                borderRadius: scale(5),
-                backgroundColor: 'rgba(255,255,255,0.3)',
-              }}
-            /> */}
         </View>
         <View
           style={{
@@ -228,6 +212,7 @@ const QrScanScreen = () => {
             <TextInput
               placeholder="R.Q"
               placeholderTextColor={'white'}
+              keyboardType="numeric"
               multiline={true}
               style={{
                 fontSize: scale(20),
@@ -244,6 +229,7 @@ const QrScanScreen = () => {
             <TextInput
               placeholder="R.W"
               placeholderTextColor={'white'}
+              keyboardType="numeric"
               multiline={true}
               style={{
                 fontSize: scale(20),
