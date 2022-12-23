@@ -192,7 +192,7 @@ const ReportScreen = () => {
                 <View
                   style={{
                     width: scale(350),
-                    height: verticalScale(510),
+                    height: verticalScale(515),
                     backgroundColor: 'white',
                     borderTopLeftRadius: scale(10),
                     borderTopRightRadius: scale(10),
@@ -214,7 +214,7 @@ const ReportScreen = () => {
                         fontSize: scale(12),
                         color: 'black',
                         fontWeight: 'bold',
-                        marginBottom: verticalScale(5),
+                        marginBottom: verticalScale(2),
                       }}>
                       FROM
                     </Text>
@@ -228,16 +228,16 @@ const ReportScreen = () => {
                           style={{
                             zIndex: 5,
                             flex: 0.2,
-                            borderRadius: 5,
-                            borderWidth: 1.2,
-                            borderColor: '#bdbebf',
+                            borderRadius: scale(5),
+                            borderWidth: scale(0.5),
+                            borderColor: 'black',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderTopLeftRadius: 7,
-                            borderBottomLeftRadius: 7,
+                            borderTopLeftRadius: scale(5),
+                            borderBottomLeftRadius: scale(5),
                             borderTopRightRadius: 0,
                             borderBottomRightRadius: 0,
-                            paddingHorizontal: 5,
+                            paddingHorizontal: scale(3),
                           }}>
                           <MaterialIcons
                             name="date-range"
@@ -249,14 +249,14 @@ const ReportScreen = () => {
                         <View
                           style={{
                             color: '#000000',
-                            paddingVertical: verticalScale(10),
+                            paddingVertical: verticalScale(11),
                             paddingHorizontal: scale(10),
                             borderTopLeftRadius: scale(0),
                             borderBottomLeftRadius: scale(0),
                             borderTopRightRadius: scale(7),
                             borderBottomRightRadius: scale(7),
-                            borderWidth: 1.2,
-                            borderColor: '#bdbebf',
+                            borderWidth: scale(0.5),
+                            borderColor: 'black',
                             flex: 0.9,
                             paddingLeft: scale(10),
                           }}>
@@ -289,7 +289,7 @@ const ReportScreen = () => {
                         fontSize: scale(12),
                         color: 'black',
                         fontWeight: 'bold',
-                        marginBottom: verticalScale(5),
+                        marginBottom: verticalScale(2),
                       }}>
                       TO
                     </Text>
@@ -303,16 +303,16 @@ const ReportScreen = () => {
                           style={{
                             zIndex: 5,
                             flex: 0.2,
-                            borderRadius: 5,
-                            borderWidth: 1.2,
-                            borderColor: '#bdbebf',
+                            borderRadius: scale(5),
+                            borderWidth: scale(0.5),
+                            borderColor: 'black',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderTopLeftRadius: 7,
-                            borderBottomLeftRadius: 7,
+                            borderTopLeftRadius: scale(5),
+                            borderBottomLeftRadius: scale(5),
                             borderTopRightRadius: 0,
                             borderBottomRightRadius: 0,
-                            paddingHorizontal: 5,
+                            paddingHorizontal: scale(4),
                           }}>
                           <MaterialIcons
                             name="date-range"
@@ -324,14 +324,14 @@ const ReportScreen = () => {
                         <View
                           style={{
                             color: '#000000',
-                            paddingVertical: verticalScale(10),
+                            paddingVertical: verticalScale(11),
                             paddingHorizontal: scale(10),
                             borderTopLeftRadius: scale(0),
                             borderBottomLeftRadius: scale(0),
                             borderTopRightRadius: scale(7),
                             borderBottomRightRadius: scale(7),
-                            borderWidth: 1.2,
-                            borderColor: '#bdbebf',
+                            borderWidth: scale(0.5),
+                            borderColor: 'black',
                             flex: 0.9,
                             paddingLeft: scale(10),
                           }}>
@@ -371,12 +371,12 @@ const ReportScreen = () => {
                       style={{
                         height: verticalScale(35),
                         borderColor: 'gray',
-                        borderWidth: scale(0.5),
+                        borderWidth: scale(0.6),
                         borderRadius: scale(5),
                         borderColor: 'black',
                         paddingHorizontal: scale(5),
                         marginBottom: verticalScale(5),
-                        paddingVertical: verticalScale(20),
+                        paddingVertical: verticalScale(21),
                       }}
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
@@ -392,6 +392,7 @@ const ReportScreen = () => {
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
                         setValue(item.id);
+                        dispatch(WorkerData(userToken, item.id));
                         setName(item.name);
                         setIsFocus(false);
                       }}
@@ -411,12 +412,12 @@ const ReportScreen = () => {
                       style={{
                         height: verticalScale(35),
                         borderColor: 'gray',
-                        borderWidth: scale(0.5),
+                        borderWidth: scale(0.6),
                         borderRadius: scale(5),
                         borderColor: 'black',
                         paddingHorizontal: scale(5),
                         marginBottom: verticalScale(5),
-                        paddingVertical: verticalScale(20),
+                        paddingVertical: verticalScale(21),
                       }}
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
@@ -427,7 +428,7 @@ const ReportScreen = () => {
                       labelField="name"
                       valueField="id"
                       placeholder={!isFocus ? 'Select Worker' : '...'}
-                      value={value}
+                      value={workers}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
@@ -451,12 +452,12 @@ const ReportScreen = () => {
                       style={{
                         height: verticalScale(35),
                         borderColor: 'gray',
-                        borderWidth: scale(0.5),
+                        borderWidth: scale(0.6),
                         borderRadius: scale(5),
                         borderColor: 'black',
                         paddingHorizontal: scale(5),
                         marginBottom: verticalScale(5),
-                        paddingVertical: verticalScale(20),
+                        paddingVertical: verticalScale(21),
                       }}
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
@@ -467,7 +468,7 @@ const ReportScreen = () => {
                       labelField="name"
                       valueField="id"
                       placeholder={!isFocus ? 'Select Product' : '...'}
-                      value={value}
+                      value={products}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
@@ -494,9 +495,13 @@ const ReportScreen = () => {
                         buttonStyle={{
                           width: scale(313),
                           backgroundColor: 'white',
+                          marginBottom: verticalScale(1),
+                          paddingVertical: verticalScale(10),
+                          paddingHorizontal: scale(100),
                         }}
                         onSelect={(selectedItem, index) => {
                           console.log(selectedItem, index);
+                          setStatuses(selectedItem);
                         }}
                         buttonTextAfterSelection={(selectedItem, index) => {
                           return selectedItem;

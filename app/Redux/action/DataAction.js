@@ -33,14 +33,14 @@ export const ProcessData =
   };
 
 export const WorkerData =
-  (userToken = '') =>
+  (userToken = '', id) =>
   dispatch => {
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
-      proccess_id: 8,
+      proccess_id: id,
     });
 
     var requestOptions = {
@@ -57,6 +57,7 @@ export const WorkerData =
       .then(response => response.json())
       .then(result => {
         const workerData = result;
+        console.log('workerData', workerData);
         if (workerData.status == true) {
           dispatch({
             type: WORKER,
