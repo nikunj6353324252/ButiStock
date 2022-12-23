@@ -1,10 +1,11 @@
-import {PROCESS, WORKER, PRODUCT, STATUS} from '../action/Types';
+import {PROCESS, WORKER, PRODUCT, STATUS, FILTER} from '../action/Types';
 
 const initialState = {
   process: [],
   worker: [],
   product: [],
   status: [],
+  filter: [],
 };
 
 export default (state = initialState, action) => {
@@ -28,6 +29,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         status: action.payload,
+      };
+
+    case FILTER:
+      return {
+        ...state,
+        filter: action.payload,
       };
     default:
       return state;

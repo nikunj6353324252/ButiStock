@@ -9,6 +9,7 @@ import {ProcessData, StatusData} from '../Redux/action/DataAction';
 import {WorkerData} from '../Redux/action/DataAction';
 import {ProductData} from '../Redux/action/DataAction';
 import {useDispatch, useSelector} from 'react-redux';
+import {Filter} from '../Redux/action/DataAction';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
@@ -545,6 +546,9 @@ const ReportScreen = () => {
                       </TouchableOpacity>
 
                       <TouchableOpacity
+                        onPress={() => {
+                          dispatch(Filter(userToken, fromtext, text, value));
+                        }}
                         style={{
                           width: scale(155),
                           height: verticalScale(44),

@@ -6,3 +6,4 @@ export const PROCESS = 'PROCESS';
 export const WORKER = 'WORKER';
 export const PRODUCT = 'PRODUCT';
 export const STATUS = 'STATUS';
+export const FILTER = 'FILTER';

@@ -1,4 +1,4 @@
-import {PROCESS, WORKER, PRODUCT, STATUS} from './Types';
+import {PROCESS, WORKER, PRODUCT, STATUS, FILTER} from './Types';
 
 export const ProcessData =
   (userToken = '') =>
@@ -120,6 +120,42 @@ export const StatusData =
           dispatch({
             type: STATUS,
             payload: statusData,
+          });
+        }
+      })
+      .catch(error => console.log('error', error));
+  };
+
+export const Filter =
+  (userToken = '', fromDate, ToDate, ProcessId) =>
+  dispatch => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${userToken}`);
+
+    var formdata = new FormData();
+    formdata.append('from', fromDate);
+    formdata.append('to', ToDate);
+    formdata.append('proccess_id', ProcessId);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://nt.dhyatiktok.com/qr_stock_api/FilterReport/filter',
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => {
+        const filterData = result;
+        console.log('filterData', filterData);
+        if (filterData.status == true) {
+          dispatch({
+            type: FILTER,
+            payload: filterData,
           });
         }
       })
