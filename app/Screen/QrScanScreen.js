@@ -61,7 +61,7 @@ const QrScanScreen = () => {
             backgroundColor={'rgba(0,0,0,0.7)'}
             labelField="label"
             valueField="value"
-            placeholder={!isFocus ? qrdata : '...'}
+            placeholder={!isFocus ? 'select worker' : '...'}
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}

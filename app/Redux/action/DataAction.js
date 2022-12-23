@@ -57,7 +57,6 @@ export const WorkerData =
       .then(response => response.json())
       .then(result => {
         const workerData = result;
-        console.log('workerData', workerData);
         if (workerData.status == true) {
           dispatch({
             type: WORKER,
@@ -151,7 +150,6 @@ export const Filter =
       .then(response => response.json())
       .then(result => {
         const filterData = result;
-        console.log('filterData', filterData);
         if (filterData.status == true) {
           dispatch({
             type: FILTER,

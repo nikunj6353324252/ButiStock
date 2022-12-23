@@ -1,4 +1,11 @@
-import {View, Text, TouchableOpacity, Dimensions, Modal} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  Modal,
+  FlatList,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -28,6 +35,9 @@ const ReportScreen = () => {
   const {worker} = useSelector(state => state.dataState);
   const {product} = useSelector(state => state.dataState);
   const {status} = useSelector(state => state.dataState);
+  const {filter} = useSelector(state => state.dataState);
+
+  const Filters = filter?.datalist;
 
   const processData = process?.datalist;
   const workerData = worker?.datalist;
@@ -119,44 +129,57 @@ const ReportScreen = () => {
         alignItems: 'center',
       }}>
       <View
-        style={{
-          width: scale(300),
-          height: verticalScale(70),
-          backgroundColor: 'white',
-          borderRadius: scale(5),
-          padding: scale(10),
-          marginTop: verticalScale(20),
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: verticalScale(2),
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: scale(4),
-          elevation: scale(2),
-        }}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <View>
-            <Text style={{fontSize: scale(15), color: 'black'}}>
-              code : 1023
-            </Text>
-            <Text style={{fontSize: scale(15), color: 'black'}}>
-              Worker : Harshil
-            </Text>
-          </View>
+        style={{marginTop: verticalScale(65), marginBottom: verticalScale(20)}}>
+        <FlatList
+          data={Filters}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <View
+                style={{
+                  width: scale(300),
+                  height: verticalScale(100),
+                  backgroundColor: 'white',
+                  borderRadius: scale(5),
+                  padding: scale(10),
+                  marginTop: verticalScale(15),
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: verticalScale(2),
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: scale(4),
+                  elevation: scale(2),
+                }}>
+                <View>
+                  <View>
+                    <Text style={{fontSize: scale(15), color: 'black'}}>
+                      code : {item.code}
+                    </Text>
+                    <Text style={{fontSize: scale(15), color: 'black'}}>
+                      Worker : {item.wname}
+                    </Text>
+                  </View>
 
-          <View>
-            <Text style={{fontSize: scale(15), color: 'black'}}>
-              code : 1023
-            </Text>
-            <Text style={{fontSize: scale(15), color: 'black'}}>
-              Worker : Harshil
-            </Text>
-          </View>
-        </View>
+                  <View>
+                    <Text style={{fontSize: scale(15), color: 'black'}}>
+                      Product : {item.pname}
+                    </Text>
+                    <Text style={{fontSize: scale(15), color: 'black'}}>
+                      Pieces : {item.given_pcs}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            );
+          }}
+        />
       </View>
 
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View
+        style={{justifyContent: 'flex-end', marginBottom: verticalScale(60)}}>
         <View style={{alignItems: 'flex-end'}}>
           <TouchableOpacity
             onPress={() => {
@@ -548,6 +571,7 @@ const ReportScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           dispatch(Filter(userToken, fromtext, text, value));
+                          setModalVisible(false);
                         }}
                         style={{
                           width: scale(155),
