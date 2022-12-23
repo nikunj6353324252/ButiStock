@@ -41,7 +41,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#2C3539'}}>
+    <ScrollView style={{flex: 1, backgroundColor: '#2C3539'}}>
       <StatusBar backgroundColor={'#2C3539'} barStyle="light-content" />
       <View
         style={{
@@ -58,7 +58,7 @@ const LoginScreen = () => {
         </Text>
       </View>
 
-      <ScrollView style={{backgroundColor: '#282828', height: height}}>
+      <View style={{backgroundColor: '#282828', height: height}}>
         <Text
           style={{
             fontSize: 20,
@@ -168,8 +168,8 @@ const LoginScreen = () => {
             </View>
           )}
         </Formik>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

@@ -1,8 +1,10 @@
-import {PROCESS, WORKER} from '../action/Types';
+import {PROCESS, WORKER, PRODUCT, STATUS} from '../action/Types';
 
 const initialState = {
   process: [],
   worker: [],
+  product: [],
+  status: [],
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +18,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         worker: action.payload,
+      };
+    case PRODUCT:
+      return {
+        ...state,
+        product: action.payload,
+      };
+    case STATUS:
+      return {
+        ...state,
+        status: action.payload,
       };
     default:
       return state;

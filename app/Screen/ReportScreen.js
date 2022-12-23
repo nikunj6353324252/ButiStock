@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import {ProcessData} from '../Redux/action/DataAction';
 import {WorkerData} from '../Redux/action/DataAction';
+import {ProductData} from '../Redux/action/DataAction';
 import {useDispatch, useSelector} from 'react-redux';
 
 const {height} = Dimensions.get('window');
@@ -20,9 +21,11 @@ const ReportScreen = () => {
   const {userToken} = useSelector(state => state.authState);
   const {process} = useSelector(state => state.dataState);
   const {worker} = useSelector(state => state.dataState);
+  const {product} = useSelector(state => state.dataState);
 
   const processData = process?.datalist;
   const workerData = worker?.datalist;
+  const productData = product?.datalist;
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -152,6 +155,7 @@ const ReportScreen = () => {
             onPress={() => {
               dispatch(ProcessData(userToken));
               dispatch(WorkerData(userToken));
+              dispatch(ProductData(userToken));
               setModalVisible(!modalVisible);
             }}
             style={{
@@ -435,18 +439,18 @@ const ReportScreen = () => {
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
                       inputSearchStyle={{height: 40, fontSize: 16}}
-                      data={data}
+                      data={productData}
                       maxHeight={250}
                       backgroundColor={'rgba(0,0,0,0.7)'}
-                      labelField="label"
-                      valueField="value"
+                      labelField="name"
+                      valueField="id"
                       placeholder={!isFocus ? 'Select Product' : '...'}
                       value={value}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
-                        setValue(item.value);
-                        setGroup(item.label);
+                        setValue(item.id);
+                        setName(item.name);
                         setIsFocus(false);
                       }}
                     />

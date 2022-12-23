@@ -1,4 +1,4 @@
-import {PROCESS, WORKER} from './Types';
+import {PROCESS, WORKER, PRODUCT, STATUS} from './Types';
 
 export const ProcessData =
   (userToken = '') =>
@@ -61,6 +61,64 @@ export const WorkerData =
           dispatch({
             type: WORKER,
             payload: workerData,
+          });
+        }
+      })
+      .catch(error => console.log('error', error));
+  };
+
+export const ProductData =
+  (userToken = '') =>
+  dispatch => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${userToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://nt.dhyatiktok.com/qr_stock_api/home/get_product',
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => {
+        const productData = result;
+        if (productData.status == true) {
+          dispatch({
+            type: PRODUCT,
+            payload: productData,
+          });
+        }
+      })
+      .catch(error => console.log('error', error));
+  };
+
+export const StatusData =
+  (userToken = '') =>
+  dispatch => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${userToken}`);
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://nt.dhyatiktok.com/qr_stock_api/home/get_status',
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => {
+        const statusData = result;
+        if (statusData.status == true) {
+          dispatch({
+            type: STATUS,
+            payload: statusData,
           });
         }
       })
