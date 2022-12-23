@@ -5,6 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import {ProcessData} from '../Redux/action/DataAction';
+import {WorkerData} from '../Redux/action/DataAction';
 import {useDispatch, useSelector} from 'react-redux';
 
 const {height} = Dimensions.get('window');
@@ -12,14 +13,16 @@ const {width} = Dimensions.get('window');
 
 const ReportScreen = () => {
   const dispatch = useDispatch();
-  const {userToken} = useSelector(state => state.authState);
-  const {worker} = useSelector(state => state.dataState);
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(null);
   const [name, setName] = useState();
   const [isFocus, setIsFocus] = useState(false);
+  const {userToken} = useSelector(state => state.authState);
+  const {process} = useSelector(state => state.dataState);
+  const {worker} = useSelector(state => state.dataState);
 
-  const Data = worker.datalist;
+  const processData = process?.datalist;
+  const workerData = worker?.datalist;
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -148,6 +151,7 @@ const ReportScreen = () => {
           <TouchableOpacity
             onPress={() => {
               dispatch(ProcessData(userToken));
+              dispatch(WorkerData(userToken));
               setModalVisible(!modalVisible);
             }}
             style={{
@@ -177,7 +181,7 @@ const ReportScreen = () => {
                 <View
                   style={{
                     width: scale(350),
-                    height: verticalScale(450),
+                    height: verticalScale(515),
                     backgroundColor: 'white',
                     borderTopLeftRadius: scale(10),
                     borderTopRightRadius: scale(10),
@@ -345,6 +349,41 @@ const ReportScreen = () => {
 
                   <View>
                     <Text style={{fontSize: scale(13), color: 'black'}}>
+                      Process
+                    </Text>
+                    <Dropdown
+                      style={{
+                        height: verticalScale(35),
+                        borderColor: 'gray',
+                        borderWidth: scale(0.5),
+                        borderRadius: scale(5),
+                        borderColor: 'black',
+                        paddingHorizontal: scale(5),
+                        marginBottom: verticalScale(5),
+                        paddingVertical: verticalScale(20),
+                      }}
+                      placeholderStyle={{fontSize: 16, color: 'grey'}}
+                      selectedTextStyle={{fontSize: 16, color: 'black'}}
+                      inputSearchStyle={{height: 40, fontSize: 16}}
+                      data={processData}
+                      maxHeight={250}
+                      backgroundColor={'rgba(0,0,0,0.7)'}
+                      labelField="name"
+                      valueField="id"
+                      placeholder={!isFocus ? 'Select Process' : '...'}
+                      value={value}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={item => {
+                        setValue(item.id);
+                        setName(item.name);
+                        setIsFocus(false);
+                      }}
+                    />
+                  </View>
+
+                  <View>
+                    <Text style={{fontSize: scale(13), color: 'black'}}>
                       Worker
                     </Text>
                     <Dropdown
@@ -361,7 +400,7 @@ const ReportScreen = () => {
                       placeholderStyle={{fontSize: 16, color: 'grey'}}
                       selectedTextStyle={{fontSize: 16, color: 'black'}}
                       inputSearchStyle={{height: 40, fontSize: 16}}
-                      data={Data}
+                      data={workerData}
                       maxHeight={250}
                       backgroundColor={'rgba(0,0,0,0.7)'}
                       labelField="name"
@@ -401,7 +440,7 @@ const ReportScreen = () => {
                       backgroundColor={'rgba(0,0,0,0.7)'}
                       labelField="label"
                       valueField="value"
-                      placeholder={!isFocus ? 'Select Worker' : '...'}
+                      placeholder={!isFocus ? 'Select Product' : '...'}
                       value={value}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
@@ -436,7 +475,7 @@ const ReportScreen = () => {
                       backgroundColor={'rgba(0,0,0,0.7)'}
                       labelField="label"
                       valueField="value"
-                      placeholder={!isFocus ? 'Select Worker' : '...'}
+                      placeholder={!isFocus ? 'Select Status' : '...'}
                       value={value}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}

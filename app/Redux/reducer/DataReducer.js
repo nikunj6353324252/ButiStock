@@ -1,11 +1,17 @@
-import {WORKER} from '../action/Types';
+import {PROCESS, WORKER} from '../action/Types';
 
 const initialState = {
+  process: [],
   worker: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case PROCESS:
+      return {
+        ...state,
+        process: action.payload,
+      };
     case WORKER:
       return {
         ...state,
