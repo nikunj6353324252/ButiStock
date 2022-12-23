@@ -4,7 +4,8 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
-import {ProcessData} from '../Redux/action/DataAction';
+import SelectDropdown from 'react-native-select-dropdown';
+import {ProcessData, StatusData} from '../Redux/action/DataAction';
 import {WorkerData} from '../Redux/action/DataAction';
 import {ProductData} from '../Redux/action/DataAction';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,16 +17,21 @@ const ReportScreen = () => {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [value, setValue] = useState(null);
+  const [workers, setWorkers] = useState(null);
+  const [products, setProducts] = useState(null);
+  const [statuses, setStatuses] = useState(null);
   const [name, setName] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const {userToken} = useSelector(state => state.authState);
   const {process} = useSelector(state => state.dataState);
   const {worker} = useSelector(state => state.dataState);
   const {product} = useSelector(state => state.dataState);
+  const {status} = useSelector(state => state.dataState);
 
   const processData = process?.datalist;
   const workerData = worker?.datalist;
   const productData = product?.datalist;
+  const statusData = status?.datalist;
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -156,6 +162,7 @@ const ReportScreen = () => {
               dispatch(ProcessData(userToken));
               dispatch(WorkerData(userToken));
               dispatch(ProductData(userToken));
+              dispatch(StatusData(userToken));
               setModalVisible(!modalVisible);
             }}
             style={{
@@ -185,7 +192,7 @@ const ReportScreen = () => {
                 <View
                   style={{
                     width: scale(350),
-                    height: verticalScale(515),
+                    height: verticalScale(510),
                     backgroundColor: 'white',
                     borderTopLeftRadius: scale(10),
                     borderTopRightRadius: scale(10),
@@ -352,7 +359,12 @@ const ReportScreen = () => {
                   </View>
 
                   <View>
-                    <Text style={{fontSize: scale(13), color: 'black'}}>
+                    <Text
+                      style={{
+                        fontSize: scale(13),
+                        color: 'black',
+                        fontWeight: 'bold',
+                      }}>
                       Process
                     </Text>
                     <Dropdown
@@ -387,7 +399,12 @@ const ReportScreen = () => {
                   </View>
 
                   <View>
-                    <Text style={{fontSize: scale(13), color: 'black'}}>
+                    <Text
+                      style={{
+                        fontSize: scale(13),
+                        color: 'black',
+                        fontWeight: 'bold',
+                      }}>
                       Worker
                     </Text>
                     <Dropdown
@@ -414,7 +431,7 @@ const ReportScreen = () => {
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
-                        setValue(item.id);
+                        setWorkers(item.id);
                         setName(item.name);
                         setIsFocus(false);
                       }}
@@ -422,7 +439,12 @@ const ReportScreen = () => {
                   </View>
 
                   <View>
-                    <Text style={{fontSize: scale(13), color: 'black'}}>
+                    <Text
+                      style={{
+                        fontSize: scale(13),
+                        color: 'black',
+                        fontWeight: 'bold',
+                      }}>
                       Product
                     </Text>
                     <Dropdown
@@ -449,7 +471,7 @@ const ReportScreen = () => {
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
-                        setValue(item.id);
+                        setProducts(item.id);
                         setName(item.name);
                         setIsFocus(false);
                       }}
@@ -457,38 +479,33 @@ const ReportScreen = () => {
                   </View>
 
                   <View>
-                    <Text style={{fontSize: scale(13), color: 'black'}}>
+                    <Text
+                      style={{
+                        fontSize: scale(13),
+                        color: 'black',
+                        fontWeight: 'bold',
+                      }}>
                       Status
                     </Text>
-                    <Dropdown
-                      style={{
-                        height: verticalScale(35),
-                        borderColor: 'gray',
-                        borderWidth: scale(0.5),
-                        borderRadius: scale(5),
-                        borderColor: 'black',
-                        paddingHorizontal: scale(5),
-                        marginBottom: verticalScale(5),
-                        paddingVertical: verticalScale(20),
-                      }}
-                      placeholderStyle={{fontSize: 16, color: 'grey'}}
-                      selectedTextStyle={{fontSize: 16, color: 'black'}}
-                      inputSearchStyle={{height: 40, fontSize: 16}}
-                      data={data}
-                      maxHeight={250}
-                      backgroundColor={'rgba(0,0,0,0.7)'}
-                      labelField="label"
-                      valueField="value"
-                      placeholder={!isFocus ? 'Select Status' : '...'}
-                      value={value}
-                      onFocus={() => setIsFocus(true)}
-                      onBlur={() => setIsFocus(false)}
-                      onChange={item => {
-                        setValue(item.value);
-                        setGroup(item.label);
-                        setIsFocus(false);
-                      }}
-                    />
+                    <View
+                      style={{borderWidth: scale(0.5), borderRadius: scale(5)}}>
+                      <SelectDropdown
+                        data={statusData}
+                        buttonStyle={{
+                          width: scale(313),
+                          backgroundColor: 'white',
+                        }}
+                        onSelect={(selectedItem, index) => {
+                          console.log(selectedItem, index);
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                          return selectedItem;
+                        }}
+                        rowTextForSelection={(item, index) => {
+                          return item;
+                        }}
+                      />
+                    </View>
                   </View>
 
                   <View>
@@ -503,7 +520,7 @@ const ReportScreen = () => {
                       <TouchableOpacity
                         onPress={() => setModalVisible(false)}
                         style={{
-                          width: scale(170),
+                          width: scale(155),
                           height: verticalScale(44),
                           backgroundColor: '#2C3539',
                           justifyContent: 'center',
@@ -523,14 +540,8 @@ const ReportScreen = () => {
                       </TouchableOpacity>
 
                       <TouchableOpacity
-                        // onPress={() => {
-                        //   dispatch(
-                        //     productListAction(setToken, 10, filterApplyData),
-                        //   );
-                        //   navigation.navigate('ProductList');
-                        // }}
                         style={{
-                          width: scale(170),
+                          width: scale(155),
                           height: verticalScale(44),
                           backgroundColor: '#87CEEB',
                           justifyContent: 'center',
