@@ -7,3 +7,4 @@ export const WORKER = 'WORKER';
 export const PRODUCT = 'PRODUCT';
 export const STATUS = 'STATUS';
 export const FILTER = 'FILTER';
+export const QR_DATA = 'QR_DATA';

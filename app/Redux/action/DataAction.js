@@ -1,4 +1,4 @@
-import {PROCESS, WORKER, PRODUCT, STATUS, FILTER} from './Types';
+import {PROCESS, WORKER, PRODUCT, STATUS, FILTER, QR_DATA} from './Types';
 
 export const ProcessData =
   (userToken = '') =>
@@ -154,6 +154,41 @@ export const Filter =
           dispatch({
             type: FILTER,
             payload: filterData,
+          });
+        }
+      })
+      .catch(error => console.log('error', error));
+  };
+
+export const qrDataAction =
+  (userToken = '', qrCode) =>
+  dispatch => {
+    console.log('qrCode', qrCode);
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${userToken}`);
+
+    var formdata = new FormData();
+    formdata.append('code', qrCode);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow',
+    };
+
+    fetch(
+      'https://nt.dhyatiktok.com/qr_stock_api/qr_data/getqrdata',
+      requestOptions,
+    )
+      .then(response => response.json())
+      .then(result => {
+        const qrdata = result;
+        // console.log('qrdata', qrdata);
+        if (qrdata.status == true) {
+          dispatch({
+            type: QR_DATA,
+            payload: qrdata,
           });
         }
       })

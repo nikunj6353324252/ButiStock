@@ -16,7 +16,7 @@ const HomeScreen = () => {
 
   return (
     <View style={{backgroundColor: '#2C3539'}}>
-      <StatusBar backgroundColor={'#2C3539'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#87CEEB'} barStyle="light-content" />
       <View
         style={{
           height: height / 2,

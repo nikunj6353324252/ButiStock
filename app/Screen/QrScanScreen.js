@@ -4,7 +4,8 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {useRoute, useIsFocused} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
-import {WorkerData} from '../Redux/action/DataAction';
+import {qrDataAction, WorkerData} from '../Redux/action/DataAction';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
@@ -13,25 +14,53 @@ const QrScanScreen = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(null);
   const [workers, setWorkers] = useState(null);
-  const [products, setProducts] = useState(null);
   const [name, setName] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const route = useRoute();
-  const isFocused = useIsFocused();
-  const {process} = useSelector(state => state.dataState);
-  const {worker} = useSelector(state => state.dataState);
-  const {product} = useSelector(state => state.dataState);
+  const {QrData} = useSelector(state => state.dataState);
   const {setToken} = useSelector(state => state.authState);
 
-  const processData = process?.datalist;
-  const workerData = worker?.datalist;
-  const productData = product?.datalist;
+  const [product, setProduct] = useState(QrData?.response?.product_name);
+  const processData = QrData?.response?.proccess;
+  const workerData = QrData?.response?.workers;
+  const [Gquantity, setGquantity] = useState(QrData?.response?.given_pcs);
+  const [Gweight, setGweight] = useState(QrData?.response?.given_weight);
+  const [Rquantity, setRquantity] = useState(QrData?.response?.received_pcs);
+  const [Rweight, setRweight] = useState(QrData?.response?.received_weight);
+  const [Laber, setLaber] = useState(QrData?.response?.given_lbr);
+  const [Total, setToatal] = useState(QrData?.response?.total);
 
-  const qrdata = route.params?.data.result;
+  console.log('qqq', QrData?.response?.given_pcs);
 
   return (
-    <ScrollView style={{backgroundColor: '#2C3539', height: height}}>
-      <View style={{margin: scale(20)}}>
+    <View style={{backgroundColor: '#2C3539', height: height}}>
+      <ScrollView
+        style={{margin: scale(20)}}
+        showsVerticalScrollIndicator={false}>
+        <View>
+          <Text
+            style={{fontSize: scale(13), color: 'white', fontWeight: 'bold'}}>
+            Product Name
+          </Text>
+          <TextInput
+            placeholder="Product Name"
+            keyboardType="numeric"
+            placeholderTextColor={'white'}
+            onChangeText={setProduct}
+            value={product}
+            style={{
+              borderWidth: scale(0.5),
+              borderRadius: scale(5),
+              borderColor: 'white',
+              marginTop: scale(3),
+              fontSize: scale(15),
+              height: verticalScale(41),
+              backgroundColor: 'rgba(255,255,255,0.3)',
+              paddingLeft: scale(10),
+              color: 'white',
+            }}
+          />
+        </View>
+
         <View style={{marginTop: verticalScale(10)}}>
           <Text
             style={{
@@ -51,7 +80,6 @@ const QrScanScreen = () => {
               borderRadius: scale(5),
               borderColor: 'white',
               paddingHorizontal: scale(5),
-              marginBottom: verticalScale(5),
               paddingVertical: verticalScale(20),
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
@@ -71,7 +99,6 @@ const QrScanScreen = () => {
             onChange={item => {
               setValue(item.id);
               setName(item.name);
-              dispatch(WorkerData(setToken, item.id));
               setIsFocus(false);
             }}
           />
@@ -121,50 +148,6 @@ const QrScanScreen = () => {
           />
         </View>
 
-        <View style={{marginTop: verticalScale(10)}}>
-          <Text
-            style={{
-              fontSize: scale(13),
-              color: 'white',
-              fontWeight: 'bold',
-              paddingLeft: scale(3),
-              paddingBottom: verticalScale(3),
-            }}>
-            Product Name
-          </Text>
-          <Dropdown
-            style={{
-              height: verticalScale(35),
-              borderColor: 'White',
-              borderWidth: scale(0.5),
-              borderRadius: scale(5),
-              borderColor: 'white',
-              paddingHorizontal: scale(5),
-              marginBottom: verticalScale(5),
-              paddingVertical: verticalScale(20),
-              backgroundColor: 'rgba(255,255,255,0.3)',
-            }}
-            placeholderStyle={{fontSize: 16, color: 'white'}}
-            selectedTextStyle={{fontSize: 16, color: 'white'}}
-            inputSearchStyle={{height: 40, fontSize: 16}}
-            data={productData}
-            maxHeight={250}
-            backgroundColor={'rgba(0,0,0,0.7)'}
-            iconColor="white"
-            labelField="name"
-            valueField="id"
-            placeholder={!isFocus ? 'Product Name' : '...'}
-            value={products}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={item => {
-              setProducts(item.id);
-              setName(item.name);
-              setIsFocus(false);
-            }}
-          />
-        </View>
-
         <View
           style={{
             flexDirection: 'row',
@@ -176,6 +159,8 @@ const QrScanScreen = () => {
               placeholder="G.Q"
               placeholderTextColor={'white'}
               multiline={true}
+              onChangeText={setGquantity}
+              value={Gquantity}
               keyboardType="numeric"
               style={{
                 fontSize: scale(20),
@@ -194,6 +179,8 @@ const QrScanScreen = () => {
               placeholderTextColor={'white'}
               keyboardType="numeric"
               multiline={true}
+              onChangeText={setGweight}
+              value={Gweight}
               style={{
                 fontSize: scale(20),
                 width: scale(150),
@@ -218,6 +205,8 @@ const QrScanScreen = () => {
               placeholderTextColor={'white'}
               keyboardType="numeric"
               multiline={true}
+              onChangeText={setRquantity}
+              value={Rquantity}
               style={{
                 fontSize: scale(20),
                 width: scale(150),
@@ -235,6 +224,8 @@ const QrScanScreen = () => {
               placeholderTextColor={'white'}
               keyboardType="numeric"
               multiline={true}
+              onChangeText={setRweight}
+              value={Rweight}
               style={{
                 fontSize: scale(20),
                 width: scale(150),
@@ -253,6 +244,8 @@ const QrScanScreen = () => {
             placeholder="Laber"
             keyboardType="numeric"
             placeholderTextColor={'white'}
+            onChangeText={setLaber}
+            value={Laber}
             style={{
               borderRadius: scale(5),
               borderWidth: scale(0.5),
@@ -266,9 +259,11 @@ const QrScanScreen = () => {
           />
 
           <TextInput
-            placeholder="Track"
+            placeholder="Total"
             keyboardType="numeric"
             placeholderTextColor={'white'}
+            onChangeText={setToatal}
+            value={Total}
             style={{
               borderWidth: scale(0.5),
               borderRadius: scale(5),
@@ -282,8 +277,27 @@ const QrScanScreen = () => {
             }}
           />
         </View>
+      </ScrollView>
+      <View
+        style={{
+          marginBottom: verticalScale(70),
+          marginHorizontal: scale(20),
+        }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#87CEEB',
+            paddingVertical: scale(10),
+            borderRadius: scale(5),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{fontSize: scale(17), color: 'white', fontWeight: 'bold'}}>
+            Submit
+          </Text>
+        </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

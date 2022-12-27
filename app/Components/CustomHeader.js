@@ -12,11 +12,11 @@ const CustomeHeader = () => {
         style={{
           flexDirection: 'row',
           width: scale(350),
-          height: verticalScale(65),
+          height: verticalScale(50),
           alignItems: 'center',
           backgroundColor: '#87CEEB',
-          borderBottomLeftRadius: verticalScale(15),
-          borderBottomRightRadius: verticalScale(15),
+          // borderBottomLeftRadius: verticalScale(15),
+          // borderBottomRightRadius: verticalScale(15),
           shadowColor: '#000',
           shadowOffset: {
             width: 0,

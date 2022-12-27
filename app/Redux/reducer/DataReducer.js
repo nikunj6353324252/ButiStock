@@ -1,4 +1,11 @@
-import {PROCESS, WORKER, PRODUCT, STATUS, FILTER} from '../action/Types';
+import {
+  PROCESS,
+  WORKER,
+  PRODUCT,
+  STATUS,
+  FILTER,
+  QR_DATA,
+} from '../action/Types';
 
 const initialState = {
   process: [],
@@ -6,6 +13,7 @@ const initialState = {
   product: [],
   status: [],
   filter: [],
+  QrData: [],
 };
 
 export default (state = initialState, action) => {
@@ -35,6 +43,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filter: action.payload,
+      };
+    case QR_DATA:
+      return {
+        ...state,
+        QrData: action.payload,
       };
     default:
       return state;
