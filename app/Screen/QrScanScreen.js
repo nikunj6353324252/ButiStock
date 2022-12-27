@@ -14,32 +14,20 @@ const QrScanScreen = () => {
   const [value, setValue] = useState(null);
   const [workers, setWorkers] = useState(null);
   const [products, setProducts] = useState(null);
-  const [name, setName] = useState('');
-  const [Group, setGroup] = useState('');
+  const [name, setName] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const route = useRoute();
   const isFocused = useIsFocused();
   const {process} = useSelector(state => state.dataState);
   const {worker} = useSelector(state => state.dataState);
   const {product} = useSelector(state => state.dataState);
-  const {userToken} = useSelector(state => state.authState);
+  const {setToken} = useSelector(state => state.authState);
 
   const processData = process?.datalist;
   const workerData = worker?.datalist;
   const productData = product?.datalist;
 
   const qrdata = route.params?.data.result;
-
-  const data = [
-    {label: '18 KT (W)', value: '1'},
-    {label: '18 KT (G)', value: '2'},
-    {label: '18 KT (R)', value: '3'},
-    {label: '18 KT (Y)', value: '4'},
-    {label: '20 KT ', value: '5'},
-    {label: '22 KT ', value: '6'},
-  ];
-
-  const id = 1;
 
   return (
     <ScrollView style={{backgroundColor: '#2C3539', height: height}}>
@@ -83,13 +71,13 @@ const QrScanScreen = () => {
             onChange={item => {
               setValue(item.id);
               setName(item.name);
-              dispatch(WorkerData(userToken, item.id));
+              dispatch(WorkerData(setToken, item.id));
               setIsFocus(false);
             }}
           />
         </View>
 
-        <View style={{marginTop: verticalScale(15)}}>
+        <View style={{marginTop: verticalScale(10)}}>
           <Text
             style={{
               fontSize: scale(13),
@@ -122,7 +110,7 @@ const QrScanScreen = () => {
             labelField="name"
             valueField="id"
             placeholder={!isFocus ? 'select worker' : '...'}
-            value={value}
+            value={workers}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
@@ -166,7 +154,7 @@ const QrScanScreen = () => {
             labelField="name"
             valueField="id"
             placeholder={!isFocus ? 'Product Name' : '...'}
-            value={value}
+            value={products}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {

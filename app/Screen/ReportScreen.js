@@ -30,7 +30,7 @@ const ReportScreen = () => {
   const [statuses, setStatuses] = useState(null);
   const [name, setName] = useState();
   const [isFocus, setIsFocus] = useState(false);
-  const {userToken} = useSelector(state => state.authState);
+  const {setToken} = useSelector(state => state.authState);
   const {process} = useSelector(state => state.dataState);
   const {worker} = useSelector(state => state.dataState);
   const {product} = useSelector(state => state.dataState);
@@ -183,10 +183,10 @@ const ReportScreen = () => {
         <View style={{alignItems: 'flex-end'}}>
           <TouchableOpacity
             onPress={() => {
-              dispatch(ProcessData(userToken));
-              dispatch(WorkerData(userToken));
-              dispatch(ProductData(userToken));
-              dispatch(StatusData(userToken));
+              dispatch(ProcessData(setToken));
+              dispatch(WorkerData(setToken));
+              dispatch(ProductData(setToken));
+              dispatch(StatusData(setToken));
               setModalVisible(!modalVisible);
             }}
             style={{
@@ -416,7 +416,7 @@ const ReportScreen = () => {
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
                         setValue(item.id);
-                        dispatch(WorkerData(userToken, item.id));
+                        dispatch(WorkerData(setToken, item.id));
                         setName(item.name);
                         setIsFocus(false);
                       }}
@@ -570,7 +570,7 @@ const ReportScreen = () => {
 
                       <TouchableOpacity
                         onPress={() => {
-                          dispatch(Filter(userToken, fromtext, text, value));
+                          dispatch(Filter(setToken, fromtext, text, value));
                           setModalVisible(false);
                         }}
                         style={{

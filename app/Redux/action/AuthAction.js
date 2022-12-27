@@ -11,17 +11,17 @@ export const authLoadingAction =
     });
   };
 
-// export const authLogOutAction = () => async dispatch => {
-//   try {
-//     await AsyncStorage.removeItem('userToken');
-//   } catch (error) {
-//     console.log(error);
-//   }
+export const authLogOutAction = () => async dispatch => {
+  try {
+    await AsyncStorage.removeItem('userToken');
+  } catch (error) {
+    console.log(error);
+  }
 
-//   dispatch({
-//     type: USER_LOGOUT,
-//   });
-// };
+  dispatch({
+    type: USER_LOGOUT,
+  });
+};
 
 export const userLoginAction =
   (userName = '', userPassword = '') =>
@@ -56,29 +56,28 @@ export const userLoginAction =
         console.log('userInfo', userInfo.token);
         dispatch(authLoadingAction());
         if (userInfo.status == true) {
-          dispatch({
-            type: USER_LOGIN,
-            payload: userInfo.token,
-          });
-          // console.log('token', token);
-          // (async () => {
-          //   await AsyncStorage.setItem('userToken', userInfo.data.token);
-          // })();
-          // // console.log(userInfo.data.token);
+          if (userInfo && userInfo.token) {
+            (async () => {
+              await AsyncStorage.setItem('userToken', userInfo.token);
+            })();
 
-          // (async () => {
-          //   const userToken = await AsyncStorage.getItem('userToken');
-          //   // console.log(userToken);
-          //   dispatch(userLoggedInAction(userToken));
-          // })();
+            (async () => {
+              const token = await AsyncStorage.getItem('userToken');
+              dispatch(userLoggedInAction(token));
+            })();
+            dispatch({
+              type: USER_LOGIN,
+              payload: userInfo.token,
+            });
 
-          Toast.show({
-            text1: 'User Login Successfully',
-            visibilityTime: 3000,
-            autoHide: true,
-            position: 'top',
-            type: 'success',
-          });
+            Toast.show({
+              text1: 'User Login Successfully',
+              visibilityTime: 3000,
+              autoHide: true,
+              position: 'top',
+              type: 'success',
+            });
+          }
         } else {
           Toast.show({
             text1: 'User Login failed.',
@@ -102,12 +101,11 @@ export const userLoginAction =
       });
   };
 
-// export const userLoggedInAction =
-//   (userToken = '') =>
-//   async dispatch => {
-//     // console.log(userToken);
-//     dispatch({
-//       type: USER_LOGGEDIN,
-//       payload: userToken,
-//     });
-//   };
+export const userLoggedInAction =
+  (userToken = '') =>
+  async dispatch => {
+    dispatch({
+      type: USER_LOGGEDIN,
+      payload: userToken,
+    });
+  };

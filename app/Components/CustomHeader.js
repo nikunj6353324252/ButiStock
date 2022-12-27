@@ -1,6 +1,6 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-import Octicons from 'react-native-vector-icons/Octicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
 
@@ -25,7 +25,16 @@ const CustomeHeader = () => {
           shadowOpacity: scale(0.25),
           shadowRadius: scale(4),
           elevation: scale(6),
-        }}></View>
+        }}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Ionicons
+            name="menu-sharp"
+            size={scale(28)}
+            color="white"
+            style={{marginLeft: scale(10)}}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
