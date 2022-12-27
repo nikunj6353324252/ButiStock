@@ -3,19 +3,32 @@ import React, {useEffect, useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useRoute, useIsFocused} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
+import {useSelector, useDispatch} from 'react-redux';
+import {WorkerData} from '../Redux/action/DataAction';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
 
 const QrScanScreen = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(null);
+  const [workers, setWorkers] = useState(null);
+  const [products, setProducts] = useState(null);
+  const [name, setName] = useState('');
   const [Group, setGroup] = useState('');
   const [isFocus, setIsFocus] = useState(false);
   const route = useRoute();
   const isFocused = useIsFocused();
+  const {process} = useSelector(state => state.dataState);
+  const {worker} = useSelector(state => state.dataState);
+  const {product} = useSelector(state => state.dataState);
+  const {userToken} = useSelector(state => state.authState);
+
+  const processData = process?.datalist;
+  const workerData = worker?.datalist;
+  const productData = product?.datalist;
 
   const qrdata = route.params?.data.result;
-  console.log('qrdata', qrdata);
 
   const data = [
     {label: '18 KT (W)', value: '1'},
@@ -26,9 +39,56 @@ const QrScanScreen = () => {
     {label: '22 KT ', value: '6'},
   ];
 
+  const id = 1;
+
   return (
     <ScrollView style={{backgroundColor: '#2C3539', height: height}}>
       <View style={{margin: scale(20)}}>
+        <View style={{marginTop: verticalScale(10)}}>
+          <Text
+            style={{
+              fontSize: scale(13),
+              color: 'white',
+              fontWeight: 'bold',
+              paddingLeft: scale(3),
+              paddingBottom: verticalScale(3),
+            }}>
+            Process Name
+          </Text>
+          <Dropdown
+            style={{
+              height: verticalScale(35),
+              borderColor: 'White',
+              borderWidth: scale(0.5),
+              borderRadius: scale(5),
+              borderColor: 'white',
+              paddingHorizontal: scale(5),
+              marginBottom: verticalScale(5),
+              paddingVertical: verticalScale(20),
+              backgroundColor: 'rgba(255,255,255,0.3)',
+            }}
+            placeholderStyle={{fontSize: 16, color: 'white'}}
+            selectedTextStyle={{fontSize: 16, color: 'white'}}
+            inputSearchStyle={{height: 40, fontSize: 16}}
+            data={processData}
+            maxHeight={250}
+            backgroundColor={'rgba(0,0,0,0.7)'}
+            iconColor="white"
+            labelField="name"
+            valueField="id"
+            placeholder={!isFocus ? 'Process Name' : '...'}
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setValue(item.id);
+              setName(item.name);
+              dispatch(WorkerData(userToken, item.id));
+              setIsFocus(false);
+            }}
+          />
+        </View>
+
         <View style={{marginTop: verticalScale(15)}}>
           <Text
             style={{
@@ -55,19 +115,19 @@ const QrScanScreen = () => {
             placeholderStyle={{fontSize: 16, color: 'white'}}
             selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
-            data={data}
+            data={workerData}
             maxHeight={250}
             iconColor="white"
             backgroundColor={'rgba(0,0,0,0.7)'}
-            labelField="label"
-            valueField="value"
+            labelField="name"
+            valueField="id"
             placeholder={!isFocus ? 'select worker' : '...'}
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setValue(item.value);
-              setGroup(item.label);
+              setWorkers(item.id);
+              setName(item.name);
               setIsFocus(false);
             }}
           />
@@ -99,63 +159,19 @@ const QrScanScreen = () => {
             placeholderStyle={{fontSize: 16, color: 'white'}}
             selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
-            data={data}
+            data={productData}
             maxHeight={250}
             backgroundColor={'rgba(0,0,0,0.7)'}
             iconColor="white"
-            labelField="label"
-            valueField="value"
+            labelField="name"
+            valueField="id"
             placeholder={!isFocus ? 'Product Name' : '...'}
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
-              setValue(item.value);
-              setGroup(item.label);
-              setIsFocus(false);
-            }}
-          />
-        </View>
-
-        <View style={{marginTop: verticalScale(10)}}>
-          <Text
-            style={{
-              fontSize: scale(13),
-              color: 'white',
-              fontWeight: 'bold',
-              paddingLeft: scale(3),
-              paddingBottom: verticalScale(3),
-            }}>
-            Process Name
-          </Text>
-          <Dropdown
-            style={{
-              height: verticalScale(35),
-              borderColor: 'White',
-              borderWidth: scale(0.5),
-              borderRadius: scale(5),
-              borderColor: 'white',
-              paddingHorizontal: scale(5),
-              marginBottom: verticalScale(5),
-              paddingVertical: verticalScale(20),
-              backgroundColor: 'rgba(255,255,255,0.3)',
-            }}
-            placeholderStyle={{fontSize: 16, color: 'white'}}
-            selectedTextStyle={{fontSize: 16, color: 'white'}}
-            inputSearchStyle={{height: 40, fontSize: 16}}
-            data={data}
-            maxHeight={250}
-            backgroundColor={'rgba(0,0,0,0.7)'}
-            iconColor="white"
-            labelField="label"
-            valueField="value"
-            placeholder={!isFocus ? 'Process Name' : '...'}
-            value={value}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={item => {
-              setValue(item.value);
-              setGroup(item.label);
+              setProducts(item.id);
+              setName(item.name);
               setIsFocus(false);
             }}
           />
