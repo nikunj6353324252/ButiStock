@@ -11,19 +11,23 @@ const Scanner = () => {
   const navigation = useNavigation();
   const [qrresult, setQrresult] = useState([]);
   const {setToken} = useSelector(state => state.authState);
+  const {QrData} = useSelector(state => state.dataState);
 
   let i = 0;
   const onSuccess = ({data}) => {
-    setQrresult(data);
+    // setQrresult(data);
     i++;
     if (i === 1) {
-      setQrresult(data);
-      if (qrresult) {
-        dispatch(qrDataAction(setToken, qrresult));
+      // setQrresult(data);
+      if (data || QrData) {
+        console.log('data', data);
+        dispatch(qrDataAction(setToken, data));
+        console.log('qr', QrData.response?.product_name);
+
         navigation.navigate('ScanScreen', {
-          // data: {
-          //   result: qrresult,
-          // },
+          data: {
+            product: QrData?.response?.product_name,
+          },
         });
       }
     }

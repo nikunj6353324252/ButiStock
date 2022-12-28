@@ -1,4 +1,21 @@
-import {PROCESS, WORKER, PRODUCT, STATUS, FILTER, QR_DATA} from './Types';
+import {
+  PROCESS,
+  WORKER,
+  PRODUCT,
+  STATUS,
+  FILTER,
+  QR_DATA,
+  AUTH_LOADING,
+} from './Types';
+
+export const authLoadingAction =
+  (loading = false) =>
+  dispatch => {
+    dispatch({
+      type: AUTH_LOADING,
+      payload: loading,
+    });
+  };
 
 export const ProcessData =
   (userToken = '') =>
@@ -164,6 +181,7 @@ export const qrDataAction =
   (userToken = '', qrCode) =>
   dispatch => {
     console.log('qrCode', qrCode);
+    dispatch(authLoadingAction(true));
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
 
@@ -185,6 +203,7 @@ export const qrDataAction =
       .then(result => {
         const qrdata = result;
         // console.log('qrdata', qrdata);
+        dispatch(authLoadingAction(false));
         if (qrdata.status == true) {
           dispatch({
             type: QR_DATA,

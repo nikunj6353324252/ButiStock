@@ -5,9 +5,11 @@ import {
   STATUS,
   FILTER,
   QR_DATA,
+  AUTH_LOADING,
 } from '../action/Types';
 
 const initialState = {
+  authLoading: false,
   process: [],
   worker: [],
   product: [],
@@ -18,6 +20,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case AUTH_LOADING:
+      return {
+        ...state,
+        authLoading: action.payload,
+      };
     case PROCESS:
       return {
         ...state,

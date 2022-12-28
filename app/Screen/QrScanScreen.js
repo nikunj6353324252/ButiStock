@@ -1,16 +1,23 @@
-import {View, Text, Dimensions, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
-import {useRoute, useIsFocused} from '@react-navigation/native';
+import {useRoute, useIsFocused, useFocusEffect} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
-import {qrDataAction, WorkerData} from '../Redux/action/DataAction';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
 
 const QrScanScreen = () => {
+  const route = useRoute();
+  const isFocused = useIsFocused;
   const dispatch = useDispatch();
   const [value, setValue] = useState(null);
   const [workers, setWorkers] = useState(null);
@@ -19,17 +26,24 @@ const QrScanScreen = () => {
   const {QrData} = useSelector(state => state.dataState);
   const {setToken} = useSelector(state => state.authState);
 
-  const [product, setProduct] = useState(QrData?.response?.product_name);
   const processData = QrData?.response?.proccess;
   const workerData = QrData?.response?.workers;
-  const [Gquantity, setGquantity] = useState(QrData?.response?.given_pcs);
-  const [Gweight, setGweight] = useState(QrData?.response?.given_weight);
-  const [Rquantity, setRquantity] = useState(QrData?.response?.received_pcs);
-  const [Rweight, setRweight] = useState(QrData?.response?.received_weight);
-  const [Laber, setLaber] = useState(QrData?.response?.given_lbr);
-  const [Total, setToatal] = useState(QrData?.response?.total);
 
-  console.log('qqq', QrData?.response?.given_pcs);
+  const [product, setProduct] = useState(route.params.data.product);
+  const [Gquantity, setGquantity] = useState();
+  const [Gweight, setGweight] = useState();
+  const [Rquantity, setRquantity] = useState();
+  const [Rweight, setRweight] = useState();
+  const [Laber, setLaber] = useState();
+  const [Total, setToatal] = useState();
+
+  // console.log(typeof route.params.data.product);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setProduct(route.params.data.product);
+    }, [isFocused]),
+  );
 
   return (
     <View style={{backgroundColor: '#2C3539', height: height}}>
