@@ -202,12 +202,12 @@ export const qrDataAction =
       .then(response => response.json())
       .then(result => {
         const qrdata = result;
-        // console.log('qrdata', qrdata);
+        console.log('qrdata', qrdata.response?.product_name);
         dispatch(authLoadingAction(false));
         if (qrdata.status == true) {
           dispatch({
             type: QR_DATA,
-            payload: qrdata,
+            payload: qrdata.response,
           });
         }
       })

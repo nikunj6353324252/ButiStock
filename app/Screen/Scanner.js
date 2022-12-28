@@ -12,25 +12,21 @@ const Scanner = () => {
   const [qrresult, setQrresult] = useState([]);
   const {setToken} = useSelector(state => state.authState);
   const {QrData} = useSelector(state => state.dataState);
+  console.log('qrd', QrData.product_name);
 
   let i = 0;
   const onSuccess = ({data}) => {
     // setQrresult(data);
     i++;
-    if (i === 1) {
-      // setQrresult(data);
-      if (data || QrData) {
-        console.log('data', data);
-        dispatch(qrDataAction(setToken, data));
-        console.log('qr', QrData.response?.product_name);
+    // console.log('data', data);
+    dispatch(qrDataAction(setToken, data));
+    console.log('qr', QrData?.product_name);
 
-        navigation.navigate('ScanScreen', {
-          data: {
-            product: QrData?.response?.product_name,
-          },
-        });
-      }
-    }
+    navigation.navigate('ScanScreen', {
+      data: {
+        product: QrData?.response?.product_name,
+      },
+    });
   };
 
   return (

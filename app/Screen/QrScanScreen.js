@@ -29,15 +29,13 @@ const QrScanScreen = () => {
   const processData = QrData?.response?.proccess;
   const workerData = QrData?.response?.workers;
 
-  const [product, setProduct] = useState(route.params.data.product);
+  const [product, setProduct] = useState();
   const [Gquantity, setGquantity] = useState();
   const [Gweight, setGweight] = useState();
   const [Rquantity, setRquantity] = useState();
   const [Rweight, setRweight] = useState();
   const [Laber, setLaber] = useState();
   const [Total, setToatal] = useState();
-
-  // console.log(typeof route.params.data.product);
 
   useFocusEffect(
     React.useCallback(() => {
