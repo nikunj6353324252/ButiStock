@@ -180,7 +180,7 @@ export const Filter =
 export const qrDataAction =
   (userToken = '', qrCode) =>
   dispatch => {
-    console.log('qrCode', qrCode);
+    // console.log('qrCode', qrCode);
     dispatch(authLoadingAction(true));
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
@@ -202,7 +202,7 @@ export const qrDataAction =
       .then(response => response.json())
       .then(result => {
         const qrdata = result;
-        console.log('qrdata', qrdata.response?.product_name);
+        // console.log('qrdata', qrdata.response?.product_name);
         dispatch(authLoadingAction(false));
         if (qrdata.status == true) {
           dispatch({

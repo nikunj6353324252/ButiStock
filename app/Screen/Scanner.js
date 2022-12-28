@@ -12,20 +12,15 @@ const Scanner = () => {
   const [qrresult, setQrresult] = useState([]);
   const {setToken} = useSelector(state => state.authState);
   const {QrData} = useSelector(state => state.dataState);
-  console.log('qrd', QrData.product_name);
 
-  let i = 0;
+  const productName = QrData.product_name;
+  // console.log('abccd', productName);
+
   const onSuccess = ({data}) => {
-    // setQrresult(data);
-    i++;
-    // console.log('data', data);
-    dispatch(qrDataAction(setToken, data));
-    console.log('qr', QrData?.product_name);
-
+    // dispatch(qrDataAction(setToken, data));
+    // console.log('productName', productName);
     navigation.navigate('ScanScreen', {
-      data: {
-        product: QrData?.response?.product_name,
-      },
+      data: data,
     });
   };
 
@@ -34,11 +29,6 @@ const Scanner = () => {
       onRead={onSuccess}
       reactivate={true}
       flashMode={RNCamera.Constants.FlashMode.off}
-      topContent={
-        <Text style={{flex: 1, fontSize: 18, padding: 32, color: '#777'}}>
-          {qrresult}
-        </Text>
-      }
     />
   );
 };

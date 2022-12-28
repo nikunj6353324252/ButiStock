@@ -11,13 +11,14 @@ import {scale, verticalScale} from 'react-native-size-matters';
 import {useRoute, useIsFocused, useFocusEffect} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
+import {qrDataAction} from '../Redux/action/DataAction';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
 
 const QrScanScreen = () => {
   const route = useRoute();
-  const isFocused = useIsFocused;
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const [value, setValue] = useState(null);
   const [workers, setWorkers] = useState(null);
@@ -29,7 +30,7 @@ const QrScanScreen = () => {
   const processData = QrData?.response?.proccess;
   const workerData = QrData?.response?.workers;
 
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState('');
   const [Gquantity, setGquantity] = useState();
   const [Gweight, setGweight] = useState();
   const [Rquantity, setRquantity] = useState();
@@ -37,11 +38,10 @@ const QrScanScreen = () => {
   const [Laber, setLaber] = useState();
   const [Total, setToatal] = useState();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setProduct(route.params.data.product);
-    }, [isFocused]),
-  );
+  useEffect(() => {
+    dispatch(qrDataAction(setToken, route.params.data));
+    setProduct(QrData.product_name);
+  }, [isFocused]);
 
   return (
     <View style={{backgroundColor: '#2C3539', height: height}}>
