@@ -15,8 +15,6 @@ const CustomeHeader = () => {
           height: verticalScale(50),
           alignItems: 'center',
           backgroundColor: '#87CEEB',
-          // borderBottomLeftRadius: verticalScale(15),
-          // borderBottomRightRadius: verticalScale(15),
           shadowColor: '#000',
           shadowOffset: {
             width: 0,
@@ -34,6 +32,7 @@ const CustomeHeader = () => {
             style={{marginLeft: scale(10)}}
           />
         </TouchableOpacity>
+        <Text></Text>
       </View>
     </View>
   );

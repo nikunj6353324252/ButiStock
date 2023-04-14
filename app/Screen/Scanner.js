@@ -9,19 +9,16 @@ import {qrDataAction} from '../Redux/action/DataAction';
 const Scanner = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [qrresult, setQrresult] = useState([]);
   const {setToken} = useSelector(state => state.authState);
   const {QrData} = useSelector(state => state.dataState);
 
-  const productName = QrData.product_name;
-  // console.log('abccd', productName);
-
   const onSuccess = ({data}) => {
-    // dispatch(qrDataAction(setToken, data));
-    // console.log('productName', productName);
-    navigation.navigate('ScanScreen', {
-      data: data,
-    });
+    dispatch(qrDataAction(setToken, data));
+    setTimeout(() => {
+      navigation.navigate('ScanScreen', {
+        data: data,
+      });
+    }, 1500);
   };
 
   return (

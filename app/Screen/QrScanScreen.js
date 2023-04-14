@@ -26,11 +26,14 @@ const QrScanScreen = () => {
   const [isFocus, setIsFocus] = useState(false);
   const {QrData} = useSelector(state => state.dataState);
   const {setToken} = useSelector(state => state.authState);
+  const productName = QrData.product_name;
+  console.log('productName', productName);
 
   const processData = QrData?.response?.proccess;
   const workerData = QrData?.response?.workers;
 
-  const [product, setProduct] = useState('');
+  const [product, setProduct] = useState();
+  // console.log('product', product);
   const [Gquantity, setGquantity] = useState();
   const [Gweight, setGweight] = useState();
   const [Rquantity, setRquantity] = useState();
@@ -39,7 +42,6 @@ const QrScanScreen = () => {
   const [Total, setToatal] = useState();
 
   useEffect(() => {
-    dispatch(qrDataAction(setToken, route.params.data));
     setProduct(QrData.product_name);
   }, [isFocused]);
 
