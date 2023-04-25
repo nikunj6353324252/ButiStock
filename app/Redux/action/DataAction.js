@@ -20,20 +20,18 @@ export const authLoadingAction =
 export const ProcessData =
   (userToken = '') =>
   dispatch => {
+    console.log('userToken', userToken);
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
 
-    var file = '<file contents here>';
-
     var requestOptions = {
-      method: 'POST',
+      method: 'GET',
       headers: myHeaders,
-      body: file,
       redirect: 'follow',
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/home/get_proccess',
+      'https://d2d.dhyaravi.com/qr_stock_api/home/get_proccess',
       requestOptions,
     )
       .then(response => response.json())
@@ -52,9 +50,24 @@ export const ProcessData =
 export const WorkerData =
   (userToken = '', id) =>
   dispatch => {
+    // var myHeaders = new Headers();
+    // myHeaders.append('Authorization', `Bearer ${userToken}`);
+    // myHeaders.append('Content-Type', 'application/json');
+
+    // var raw = JSON.stringify({
+    //   proccess_id: id,
+    // });
+
+    // var requestOptions = {
+    //   method: 'POST',
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: 'follow',
+    // };
+
     var myHeaders = new Headers();
-    myHeaders.append('Authorization', `Bearer ${userToken}`);
     myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${userToken}`);
 
     var raw = JSON.stringify({
       proccess_id: id,
@@ -68,7 +81,7 @@ export const WorkerData =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/home/get_workers',
+      'https://d2d.dhyaravi.com/qr_stock_api/home/get_workers',
       requestOptions,
     )
       .then(response => response.json())
@@ -87,6 +100,7 @@ export const WorkerData =
 export const ProductData =
   (userToken = '') =>
   dispatch => {
+    console.log('producttoken', userToken);
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
 
@@ -97,7 +111,7 @@ export const ProductData =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/home/get_product',
+      'https://d2d.dhyaravi.com/qr_stock_api/home/get_product',
       requestOptions,
     )
       .then(response => response.json())
@@ -126,7 +140,7 @@ export const StatusData =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/home/get_status',
+      'https://d2d.dhyaravi.com/qr_stock_api/home/get_status',
       requestOptions,
     )
       .then(response => response.json())
@@ -143,7 +157,15 @@ export const StatusData =
   };
 
 export const Filter =
-  (userToken = '', fromDate, ToDate, ProcessId) =>
+  (
+    userToken = '',
+    fromDate,
+    ToDate,
+    ProcessId,
+    workerid,
+    productid,
+    statusid,
+  ) =>
   dispatch => {
     var myHeaders = new Headers();
     myHeaders.append('Authorization', `Bearer ${userToken}`);
@@ -152,6 +174,9 @@ export const Filter =
     formdata.append('from', fromDate);
     formdata.append('to', ToDate);
     formdata.append('proccess_id', ProcessId);
+    formdata.append('worker_id', workerid);
+    formdata.append('product_id', productid);
+    formdata.append('status_id', statusid);
 
     var requestOptions = {
       method: 'POST',
@@ -161,12 +186,13 @@ export const Filter =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/FilterReport/filter',
+      'https://d2d.dhyaravi.com/qr_stock_api/FilterReport/filter',
       requestOptions,
     )
       .then(response => response.json())
       .then(result => {
         const filterData = result;
+        console.log(filterData);
         if (filterData.status == true) {
           dispatch({
             type: FILTER,
@@ -194,12 +220,13 @@ export const qrDataAction =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/qr_data/getqrdata',
+      'https://d2d.dhyaravi.com/qr_stock_api/qr_data/getqrdata',
       requestOptions,
     )
       .then(response => response.json())
       .then(result => {
         const qrdata = result;
+        console.log('qrdata', qrdata);
         if (qrdata.status == true) {
           dispatch({
             type: QR_DATA,

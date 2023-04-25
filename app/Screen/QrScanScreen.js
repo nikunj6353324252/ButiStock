@@ -5,13 +5,18 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
 import {useRoute, useIsFocused, useFocusEffect} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
-import {qrDataAction} from '../Redux/action/DataAction';
+import {
+  ProductData,
+  qrDataAction,
+  WorkerData,
+} from '../Redux/action/DataAction';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
@@ -32,6 +37,8 @@ const QrScanScreen = () => {
   const processData = QrData?.response?.proccess;
   const workerData = QrData?.response?.workers;
 
+  console.log(QrData.proccess);
+
   const [product, setProduct] = useState();
   // console.log('product', product);
   const [Gquantity, setGquantity] = useState();
@@ -43,7 +50,17 @@ const QrScanScreen = () => {
 
   useEffect(() => {
     setProduct(QrData.product_name);
-  }, [isFocused]);
+    setLaber(QrData.given_lbr);
+    setToatal(QrData.total);
+    setRweight(QrData.received_weight);
+    setRquantity(QrData.received_pcs);
+    setGweight(QrData.given_weight);
+    setGquantity(QrData.given_pcs);
+    setValue(String(QrData.selected_proccess_id));
+    setWorkers(String(QrData.selected_worker_id));
+  }, [QrData]);
+
+  console.log(QrData.selected_worker_id);
 
   return (
     <View style={{backgroundColor: '#2C3539', height: height}}>
@@ -56,6 +73,7 @@ const QrScanScreen = () => {
             Product Name
           </Text>
           <TextInput
+            // multiline={true}
             placeholder="Product Name"
             keyboardType="numeric"
             placeholderTextColor={'white'}
@@ -86,6 +104,7 @@ const QrScanScreen = () => {
             }}>
             Process Name
           </Text>
+
           <Dropdown
             style={{
               height: verticalScale(35),
@@ -94,19 +113,22 @@ const QrScanScreen = () => {
               borderRadius: scale(5),
               borderColor: 'white',
               paddingHorizontal: scale(5),
+              marginBottom: verticalScale(5),
               paddingVertical: verticalScale(20),
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
             placeholderStyle={{fontSize: 16, color: 'white'}}
+            itemTextStyle={{color: 'grey'}}
             selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
-            data={processData}
-            maxHeight={250}
-            backgroundColor={'rgba(0,0,0,0.7)'}
             iconColor="white"
+            data={QrData.proccess}
+            search
+            maxHeight={300}
             labelField="name"
             valueField="id"
-            placeholder={!isFocus ? 'Process Name' : '...'}
+            placeholder={!isFocus ? 'Select User' : '...'}
+            searchPlaceholder="Search..."
             value={value}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
@@ -129,6 +151,7 @@ const QrScanScreen = () => {
             }}>
             Worker
           </Text>
+
           <Dropdown
             style={{
               height: verticalScale(35),
@@ -142,14 +165,16 @@ const QrScanScreen = () => {
               backgroundColor: 'rgba(255,255,255,0.3)',
             }}
             placeholderStyle={{fontSize: 16, color: 'white'}}
+            itemTextStyle={{color: 'grey'}}
             selectedTextStyle={{fontSize: 16, color: 'white'}}
             inputSearchStyle={{height: 40, fontSize: 16}}
-            data={workerData}
-            maxHeight={250}
             iconColor="white"
-            backgroundColor={'rgba(0,0,0,0.7)'}
+            data={QrData.workers}
+            search
+            maxHeight={300}
             labelField="name"
             valueField="id"
+            searchPlaceholder="Search..."
             placeholder={!isFocus ? 'select worker' : '...'}
             value={workers}
             onFocus={() => setIsFocus(true)}
@@ -316,3 +341,50 @@ const QrScanScreen = () => {
 };
 
 export default QrScanScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: scale(20),
+    marginTop: verticalScale(50),
+  },
+  dropdown: {
+    backgroundColor: '#333333',
+    height: verticalScale(45),
+    borderColor: '#f09a36',
+    borderWidth: 0.5,
+    borderRadius: scale(15),
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+    alignSelf: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    color: 'grey',
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  iconStyle: {
+    color: 'white',
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});

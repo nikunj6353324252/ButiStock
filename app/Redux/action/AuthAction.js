@@ -47,7 +47,7 @@ export const userLoginAction =
     };
 
     fetch(
-      'https://nt.dhyatiktok.com/qr_stock_api/register/login',
+      'https://d2d.dhyaravi.com/qr_stock_api/register/login',
       requestOptions,
     )
       .then(response => response.json())

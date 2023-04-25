@@ -5,6 +5,7 @@ import {
   Dimensions,
   Modal,
   FlatList,
+  Image,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {scale, verticalScale} from 'react-native-size-matters';
@@ -17,6 +18,7 @@ import {WorkerData} from '../Redux/action/DataAction';
 import {ProductData} from '../Redux/action/DataAction';
 import {useDispatch, useSelector} from 'react-redux';
 import {Filter} from '../Redux/action/DataAction';
+import {source} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const {height} = Dimensions.get('window');
 const {width} = Dimensions.get('window');
@@ -119,6 +121,7 @@ const ReportScreen = () => {
 
   // ************* to date end ************** //
 
+  console.log(Filters);
   return (
     <View
       style={{
@@ -128,55 +131,74 @@ const ReportScreen = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <View
-        style={{marginTop: verticalScale(65), marginBottom: verticalScale(20)}}>
-        <FlatList
-          data={Filters}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => {
-            return (
-              <View
-                style={{
-                  width: scale(300),
-                  height: verticalScale(100),
-                  backgroundColor: 'white',
-                  borderRadius: scale(5),
-                  padding: scale(10),
-                  marginTop: verticalScale(15),
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: verticalScale(2),
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: scale(4),
-                  elevation: scale(2),
-                }}>
-                <View>
+      {Filters == 0 || undefined ? (
+        <View style={{height: verticalScale(600), justifyContent: 'center'}}>
+          <Image
+            style={{
+              height: scale(250),
+              width: scale(250),
+            }}
+            source={{uri: 'https://i.postimg.cc/sfZR5bJW/No-data-rafiki.png'}}
+          />
+          <Text
+            style={{fontSize: scale(17), color: '#fff', alignSelf: 'center'}}>
+            Result not found
+          </Text>
+        </View>
+      ) : (
+        <View
+          style={{
+            marginTop: verticalScale(65),
+            marginBottom: verticalScale(20),
+          }}>
+          <FlatList
+            data={Filters}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => {
+              return (
+                <View
+                  style={{
+                    width: scale(300),
+                    height: verticalScale(100),
+                    backgroundColor: 'white',
+                    borderRadius: scale(5),
+                    padding: scale(10),
+                    marginTop: verticalScale(15),
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: verticalScale(2),
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: scale(4),
+                    elevation: scale(2),
+                  }}>
                   <View>
-                    <Text style={{fontSize: scale(15), color: 'black'}}>
-                      code : {item.code}
-                    </Text>
-                    <Text style={{fontSize: scale(15), color: 'black'}}>
-                      Worker : {item.wname}
-                    </Text>
-                  </View>
+                    <View>
+                      <Text style={{fontSize: scale(15), color: 'black'}}>
+                        code : {item.code}
+                      </Text>
+                      <Text style={{fontSize: scale(15), color: 'black'}}>
+                        Worker : {item.wname}
+                      </Text>
+                    </View>
 
-                  <View>
-                    <Text style={{fontSize: scale(15), color: 'black'}}>
-                      Product : {item.pname}
-                    </Text>
-                    <Text style={{fontSize: scale(15), color: 'black'}}>
-                      Pieces : {item.given_pcs}
-                    </Text>
+                    <View>
+                      <Text style={{fontSize: scale(15), color: 'black'}}>
+                        Product : {item.pname}
+                      </Text>
+                      <Text style={{fontSize: scale(15), color: 'black'}}>
+                        Pieces : {item.given_pcs}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            );
-          }}
-        />
-      </View>
+              );
+            }}
+          />
+        </View>
+      )}
 
       <View
         style={{justifyContent: 'flex-end', marginBottom: verticalScale(60)}}>
@@ -570,8 +592,22 @@ const ReportScreen = () => {
 
                       <TouchableOpacity
                         onPress={() => {
-                          dispatch(Filter(setToken, fromtext, text, value));
+                          dispatch(
+                            Filter(
+                              setToken,
+                              fromtext,
+                              text,
+                              value,
+                              workers,
+                              products,
+                              statuses,
+                            ),
+                          );
                           setModalVisible(false);
+                          setValue('');
+                          setWorkers('');
+                          setProducts('');
+                          setStatuses('');
                         }}
                         style={{
                           width: scale(155),

@@ -13,7 +13,11 @@ const Scanner = () => {
   const {QrData} = useSelector(state => state.dataState);
 
   const onSuccess = ({data}) => {
+    console.log(data);
     dispatch(qrDataAction(setToken, data));
+    if (data) {
+      navigation.navigate('ScanScreen');
+    }
     setTimeout(() => {
       navigation.navigate('ScanScreen', {
         data: data,
